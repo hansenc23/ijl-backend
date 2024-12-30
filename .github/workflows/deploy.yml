@@ -51,13 +51,13 @@ jobs:
 
       - name: Bootstrap CDK Environment
         run: |
-        cdk bootstrap aws://181945851404/${{ env.AWS_DEFAULT_REGION }} \
+          cdk bootstrap aws://181945851404/${{ env.AWS_DEFAULT_REGION }} \
           --require-approval never
 
       - name: Install Dependencies for Infrastructure
         run: |
-        cd infra
-        npm install
+          cd infra
+          npm install
 
       # Deploy the CDK Stack
       - name: Deploy CDK Stack
