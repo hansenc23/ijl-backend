@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1735468665266,
+      "tag": "20241229103745_fluffy_barracuda",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+services:
+  ijl-app:
+    container_name: ijl-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PORT=${PORT}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - DB_HOST=${DB_HOST}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PORT=${DB_PORT}
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./src:/usr/src/app/src
+    depends_on:
+      ijl-db:
+        condition: service_healthy
+  ijl-db:
+    hostname: ijl-db
+    image: mysql
+    container_name: ijl-db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 10s
+      timeout: 5s
+      retries: 3
