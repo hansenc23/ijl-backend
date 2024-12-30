@@ -45,14 +45,22 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-      - name: Install CDK and Dependencies
+      - name: Install CDK CLI
         run: |
           npm install -g aws-cdk
+
+       - name: Bootstrap CDK Environment
+        run: |
+          cdk bootstrap aws://181945851404/${{ env.AWS_DEFAULT_REGION }} \
+            --require-approval never
+
+        - name: Install Dependencies for Infrastructure
+        run: |
           cd infra
           npm install
 
-      # Deploy the CDK Stack
-      - name: Deploy CDK Stack
-        run: |
-          cd infra
-          cdk deploy --require-approval never
+        # Deploy the CDK Stack
+        - name: Deploy CDK Stack
+          run: |
+            cd infra
+            cdk deploy --require-approval never
