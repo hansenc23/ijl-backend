@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AWS_DEFAULT_REGION: ${{ vars.AWS_REGION }}
+  AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
   ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
   IAM_ROLE: ${{ vars.IAM_ROLE }}
 
@@ -26,7 +26,7 @@ jobs:
         with:
           role-to-assume: ${{ env.IAM_ROLE }}
           role-session-name: GitHubActionsSession
-          aws-region: ${{ env.AWS_REGION }}
+          aws-region: ${{ env.AWS_DEFAULT_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
