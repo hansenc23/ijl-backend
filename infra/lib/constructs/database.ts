@@ -27,6 +27,7 @@ export class DatabaseConstruct extends Construct {
     });
 
     this.instance = new rds.DatabaseInstance(this, 'ijl-db', {
+      instanceIdentifier: 'ijl-db-prod',
       engine: rds.DatabaseInstanceEngine.mysql({
         version: rds.MysqlEngineVersion.VER_8_0_39,
       }),
