@@ -55,7 +55,6 @@ jobs:
         run: |
           cdk bootstrap aws://181945851404/${{ env.AWS_DEFAULT_REGION }} \
           --trust 181945851404 \
-          --cloudformation-execution-policies ${{ env.IAM_ROLE }} \
           --require-approval never
 
       - name: Install Dependencies for Infrastructure
