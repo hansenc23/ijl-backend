@@ -17,6 +17,12 @@ export class DatabaseConstruct extends Construct {
       description: 'Security group for RDS instance',
     });
 
+    this.securityGroup.addIngressRule(
+      ec2.Peer.ipv4('0.0.0.0/0'),
+      ec2.Port.tcp(3306),
+      'Allow external connections from anywhere to RDS MySQL instance',
+    );
+
     this.secret = new secretsmanager.Secret(this, 'ijl-db-secret', {
       secretName: 'ijl-prod',
       generateSecretString: {
