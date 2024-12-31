@@ -32,8 +32,9 @@ export class DatabaseConstruct extends Construct {
       }),
       vpc,
       vpcSubnets: {
-        subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
+        subnetType: ec2.SubnetType.PUBLIC,
       },
+      publiclyAccessible: true,
       instanceType: ec2.InstanceType.of(ec2.InstanceClass.T4G, ec2.InstanceSize.MICRO),
       securityGroups: [this.securityGroup],
       databaseName: 'ijl',
