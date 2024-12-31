@@ -8,7 +8,8 @@ export class NetworkConstruct extends Construct {
     super(scope, id);
 
     this.vpc = new ec2.Vpc(this, 'ijl-vpc', {
-      maxAzs: 2,
+      vpcName: 'ijl-vpc',
+      maxAzs: 3,
       natGateways: 1,
       subnetConfiguration: [
         {
