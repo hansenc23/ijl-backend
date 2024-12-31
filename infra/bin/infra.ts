@@ -1,5 +1,4 @@
-#!/usr/bin/env node
 import * as cdk from 'aws-cdk-lib';
-import { NetworkingStack } from '../lib/networking-stack';
+import { InfraStack } from '../lib/infra-stack';
 const app = new cdk.App();
-new NetworkingStack(app, 'NetworkingStack');
+new InfraStack(app, 'InfraStack');
