@@ -12,6 +12,7 @@ env:
   ECS_TASK_CONTAINER_NAME: ${{ vars.ECS_TASK_CONTAINER_NAME }}
   ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
   ECS_SERVICE: ${{ vars.ECS_SERVICE }}
+  ECS_TASK_DEFINITION: ${{ vars.ECS_TASK_DEFINITION }}
 
 jobs:
   deploy:
@@ -54,7 +55,7 @@ jobs:
         id: download-task
         run: |
           aws ecs describe-task-definition \
-            --task-definition ${{ env.ECS_SERVICE }} \
+            --task-definition ${{ env.ECS_TASK_DEFINITION }} \
             > ./task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
