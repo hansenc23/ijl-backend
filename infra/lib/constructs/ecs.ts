@@ -35,6 +35,7 @@ export class ServiceConstruct extends Construct {
           DB_DATABASE: ecs.Secret.fromSecretsManager(dbSecret, 'dbname'),
           DB_PORT: ecs.Secret.fromSecretsManager(dbSecret, 'port'),
           DB_HOST: ecs.Secret.fromSecretsManager(dbSecret, 'host'),
+          PORT: ecs.Secret.fromSecretsManager(dbSecret, 'app_port'),
         },
         containerPort: 80,
       },
