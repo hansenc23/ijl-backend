@@ -31,7 +31,7 @@ export class ServiceConstruct extends Construct {
       memoryLimitMiB: 512,
       desiredCount: 1,
       taskImageOptions: {
-        image: ecs.ContainerImage.fromEcrRepository(repository),
+        image: ecs.ContainerImage.fromEcrRepository(repository, 'latest'),
         secrets: {
           DB_USERNAME: ecs.Secret.fromSecretsManager(dbSecret, 'username'),
           DB_PASSWORD: ecs.Secret.fromSecretsManager(dbSecret, 'password'),
