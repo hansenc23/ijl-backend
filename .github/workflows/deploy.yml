@@ -71,6 +71,6 @@ jobs:
 
       - name: Apply database migrations
         run: |
-          cd ..
+          yarn install
           yarn db:makemigrations
           yarn db:migrate
