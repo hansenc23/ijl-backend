@@ -5,7 +5,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const PORT = process.env.PORT || 8000;
   await app.listen(PORT, () => {
-    console.log(`API Running on Port: ${PORT}`);
+    console.log(`API Running on Mode: ${process.env.NODE_ENV} - Port: ${PORT}`);
   });
 }
 bootstrap();

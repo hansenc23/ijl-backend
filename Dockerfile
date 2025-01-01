@@ -1,11 +1,19 @@
-FROM node:22
+FROM node:22-alpine
 
 WORKDIR /usr/src/app
 
+# Copy only necessary files for installation
+COPY package.json yarn.lock ./
+
+# Install dependencies
+RUN yarn install
+
 COPY . .
 
-RUN yarn install
+# Build the application
+RUN yarn build
 
 EXPOSE 8000
 
-CMD ["yarn", "start:dev"]
+# Start the server
+CMD ["sh", "-c", "if [ \"$NODE_ENV\" = \"production\" ]; then yarn start:prod; else yarn start:dev; fi"]
