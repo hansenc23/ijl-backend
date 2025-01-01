@@ -53,11 +53,12 @@ jobs:
 
       - name: Download task definition
         run: |
-          aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION > ./task-definition.json
+        aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION \
+        | jq '.taskDefinition' > processed-task-definition.json
 
       - name: Print task definition content
         run: |
-          cat ./task-definition.json
+          cat ./processed-task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
