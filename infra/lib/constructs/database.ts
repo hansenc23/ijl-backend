@@ -24,9 +24,9 @@ export class DatabaseConstruct extends Construct {
     );
 
     this.secret = new secretsmanager.Secret(this, 'ijl-db-secret', {
-      secretName: 'ijl-app-prod',
+      secretName: 'ijl-app-secret',
       generateSecretString: {
-        secretStringTemplate: JSON.stringify({ username: 'admin' }),
+        secretStringTemplate: JSON.stringify({ username: 'admin', app_port: 80 }),
         generateStringKey: 'password',
         excludePunctuation: true,
         includeSpace: false,

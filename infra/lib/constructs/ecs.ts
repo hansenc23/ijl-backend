@@ -17,6 +17,7 @@ export class ServiceConstruct extends Construct {
     super(scope, id);
 
     const cluster = new ecs.Cluster(this, 'ijl-cluster', {
+      clusterName: 'ijl-cluster',
       vpc,
     });
 
@@ -24,6 +25,8 @@ export class ServiceConstruct extends Construct {
 
     const fargateService = new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'ijl-service-prod', {
       cluster,
+      serviceName: 'ijl-service',
+      loadBalancerName: 'ijl-app-alb',
       cpu: 256,
       memoryLimitMiB: 512,
       desiredCount: 1,
