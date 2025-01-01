@@ -53,8 +53,8 @@ jobs:
 
       - name: Download task definition
         run: |
-        aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION \
-        | jq '.taskDefinition' > processed-task-definition.json
+          aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION \
+          | jq '.taskDefinition' > processed-task-definition.json
 
       - name: Print task definition content
         run: |
