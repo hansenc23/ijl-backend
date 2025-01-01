@@ -68,3 +68,8 @@ jobs:
         run: |
           cd infra
           cdk deploy --require-approval never
+
+      - name: Apply database migrations
+        run: |
+          yarn db:makemigrations
+          yarn db:migrate
