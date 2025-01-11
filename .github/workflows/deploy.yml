@@ -75,7 +75,7 @@ jobs:
       - name: Download ECS task definition
         run: |
           aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION \
-          | jq '.taskDefinition' > processed-task-definition.json
+          | jq '.taskDefinition | del(.enableFaultInjection)' > processed-task-definition.json
 
       - name: Debug Task Definition
         run: |
