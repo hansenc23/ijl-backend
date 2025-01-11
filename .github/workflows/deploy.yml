@@ -72,21 +72,10 @@ jobs:
           cd infra
           cdk deploy --require-approval never
 
-      - name: Download and clean ECS task definition
+      - name: Download ECS task definition
         run: |
           aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION \
-          | jq '{
-              family,
-              taskRoleArn,
-              executionRoleArn,
-              networkMode,
-              containerDefinitions,
-              volumes,
-              placementConstraints,
-              requiresCompatibilities,
-              cpu,
-              memory
-            }' > processed-task-definition.json
+          | jq '.taskDefinition' > processed-task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
