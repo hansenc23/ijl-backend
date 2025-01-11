@@ -77,6 +77,11 @@ jobs:
           aws ecs describe-task-definition --task-definition $ECS_TASK_DEFINITION \
           | jq '.taskDefinition' > processed-task-definition.json
 
+      - name: Debug Task Definition
+        run: |
+          echo "Processed task definition:"
+          cat ./processed-task-definition.json
+
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
