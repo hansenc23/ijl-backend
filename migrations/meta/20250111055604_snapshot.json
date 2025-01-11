@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "96953402-11b4-4474-955d-6ade71483767",
+  "id": "9f90730d-0352-4802-9997-1bfe82fba4f7",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "Ships": {
@@ -18,14 +18,14 @@
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "nahkoda": {
           "name": "nahkoda",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         }
       },

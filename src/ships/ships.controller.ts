@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { ShipsService } from './ships.service';
 import { CreateShipRequest } from './dto/create-ship.request';
-
+import { UpdateShipRequest } from './dto/update-ship.request';
 @Controller('ships')
 export class ShipsController {
   constructor(private readonly shipsService: ShipsService) {}
@@ -11,8 +11,26 @@ export class ShipsController {
     return this.shipsService.getShips();
   }
 
+  @Get(':id')
+  async getShip(@Param('id') shipId: string) {
+    return this.shipsService.getShip(parseInt(shipId));
+  }
+
   @Post()
   async createShip(@Body() request: CreateShipRequest) {
-    return this.shipsService.createShip(request);
+    this.shipsService.createShip(request);
+  }
+
+  @Patch(':id')
+  async updateShip(@Param('id') shipId: string, @Body() request: UpdateShipRequest) {
+    if (Object.keys(request).length === 0) {
+      throw new BadRequestException('Request body cannot be empty');
+    }
+    return this.shipsService.updateShip(parseInt(shipId), request);
+  }
+
+  @Delete(':id')
+  async deleteShip(@Param('id') shipId: string) {
+    return this.shipsService.deleteShip(parseInt(shipId));
   }
 }
