@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "9f90730d-0352-4802-9997-1bfe82fba4f7",
+  "id": "284ddfa3-2102-452f-ab59-1cc406b3b03a",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "Ships": {
