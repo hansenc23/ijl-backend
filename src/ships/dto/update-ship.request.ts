@@ -1,4 +1,4 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, IsUppercase } from 'class-validator';
 
 export class UpdateShipRequest {
   @IsString()
@@ -8,4 +8,9 @@ export class UpdateShipRequest {
   @IsString()
   @IsOptional()
   nahkoda?: string;
+
+  @IsString()
+  @IsOptional()
+  @IsUppercase()
+  initials?: string;
 }
