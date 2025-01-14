@@ -1,0 +1,1 @@
+ALTER TABLE `Ships` ADD `initials` text NOT NULL;

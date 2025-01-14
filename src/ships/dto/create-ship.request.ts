@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString, IsUppercase } from 'class-validator';
 
 export class CreateShipRequest {
   @IsString()
@@ -8,4 +8,9 @@ export class CreateShipRequest {
   @IsString()
   @IsNotEmpty()
   nahkoda: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsUppercase()
+  initials: string;
 }
