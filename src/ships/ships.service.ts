@@ -43,12 +43,18 @@ export class ShipsService {
     await this.db.primary.delete(schema.ships).where(eq(schema.ships.id, id));
   }
 
-  async getShipWithVoyages(id: number) {
-    return this.db.primary.query.ships.findMany({
-      where: eq(schema.ships.id, id),
+  async getShipWithVoyages(shipId: number) {
+    const shipWithVoyages = await this.db.primary.query.ships.findFirst({
+      where: eq(schema.ships.id, shipId),
       with: {
         voyages: true,
       },
     });
+
+    if (!shipWithVoyages) {
+      throw new NotFoundException();
+    }
+
+    return shipWithVoyages;
   }
 }
