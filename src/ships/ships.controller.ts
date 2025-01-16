@@ -33,4 +33,9 @@ export class ShipsController {
   async deleteShip(@Param('id') shipId: string) {
     return this.shipsService.deleteShip(parseInt(shipId));
   }
+
+  @Get(':id/voyages')
+  async getShipWithVoyages(@Param('id') shipId: string) {
+    return this.shipsService.getShipWithVoyages(parseInt(shipId));
+  }
 }
