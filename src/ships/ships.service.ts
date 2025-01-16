@@ -42,4 +42,13 @@ export class ShipsService {
 
     await this.db.primary.delete(schema.ships).where(eq(schema.ships.id, id));
   }
+
+  async getShipWithVoyages(id: number) {
+    return this.db.primary.query.ships.findMany({
+      where: eq(schema.ships.id, id),
+      with: {
+        voyages: true,
+      },
+    });
+  }
 }
