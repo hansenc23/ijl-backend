@@ -60,7 +60,12 @@ describe('CompanyService', () => {
       const result = await service.getCompany(1);
       expect(result).toEqual(mockCompany);
       expect(mockDatabaseService.primary.query.company.findFirst).toHaveBeenCalledWith({
-        where: expect.anything(),
+        where: expect.objectContaining({
+          queryChunks: expect.any(Array),
+        }),
+        with: {
+          deals: true,
+        },
       });
     });
 
@@ -68,9 +73,6 @@ describe('CompanyService', () => {
       mockDatabaseService.primary.query.company.findFirst.mockResolvedValue(null);
 
       await expect(service.getCompany(1)).rejects.toThrow(NotFoundException);
-      expect(mockDatabaseService.primary.query.company.findFirst).toHaveBeenCalledWith({
-        where: expect.anything(),
-      });
     });
   });
 

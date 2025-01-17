@@ -14,6 +14,9 @@ export class CompanyService {
   async getCompany(id: number) {
     const company = await this.db.primary.query.company.findFirst({
       where: eq(schema.company.id, id),
+      with: {
+        deals: true,
+      },
     });
 
     if (!company) {
@@ -28,7 +31,15 @@ export class CompanyService {
   }
 
   async updateCompany(id: number, company: Partial<typeof schema.company.$inferInsert>) {
-    await this.db.primary.update(schema.company).set(company).where(eq(schema.company.id, id));
+    const companyRecord = await this.db.primary.query.company.findFirst({
+      where: eq(schema.company.id, id),
+    });
+
+    if (!companyRecord) {
+      throw new NotFoundException();
+    }
+
+    await this.db.primary.update(schema.company).set(company).where(eq(schema.company.id, companyRecord.id));
   }
 
   async deleteCompany(id: number) {
