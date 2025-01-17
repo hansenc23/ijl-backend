@@ -1,0 +1,1 @@
+ALTER TABLE `Deal` MODIFY COLUMN `goods_description` text NOT NULL;

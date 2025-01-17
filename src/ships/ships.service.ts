@@ -14,6 +14,9 @@ export class ShipsService {
   async getShip(id: number) {
     const ship = await this.db.primary.query.ships.findFirst({
       where: eq(schema.ships.id, id),
+      with: {
+        voyages: true,
+      },
     });
 
     if (!ship) {
