@@ -1,10 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import * as schema from './schema';
+import * as voyageSchema from '../voyage/schema';
 import { eq } from 'drizzle-orm';
-
+import { CreateDealRequest } from './dto/create-deal.request';
+import { Logger } from '@nestjs/common';
 @Injectable()
 export class DealService {
+  private readonly logger = new Logger(DealService.name);
+
   constructor(private db: DatabaseService) {}
 
   async getDeals() {
@@ -26,16 +30,41 @@ export class DealService {
     return deal;
   }
 
-  async createDeal(deal: typeof schema.deal.$inferInsert) {
-    const { rate_per_tonne, unit_weight, quantity } = deal;
-    const total_weight_in_tonnes = (quantity * unit_weight) / 1000;
-    const total_price = total_weight_in_tonnes * rate_per_tonne;
+  async createDeal(deal: CreateDealRequest['deal'], voyage: CreateDealRequest['voyage']) {
+    const total_weight_in_tonnes = (deal.quantity * deal.unit_weight) / 1000;
+    const total_price = total_weight_in_tonnes * deal.rate_per_tonne;
+    if (voyage && deal) {
+      this.logger.log('Creating a deal with a new voyage');
+      await this.db.primary.transaction(async (tx) => {
+        const [newVoyage] = await tx.insert(voyageSchema.voyage).values({
+          from_location: voyage.from_location,
+          to_location: voyage.to_location,
+          voyage_number: voyage.voyage_number,
+          ship_id: voyage.ship_id,
+        });
 
-    const dealRecord = {
-      ...deal,
-      total_price,
-    };
-    await this.db.primary.insert(schema.deal).values(dealRecord);
+        await tx.insert(schema.deal).values({
+          company_id: deal.company_id,
+          goods_description: deal.goods_description,
+          quantity: deal.quantity,
+          rate_per_tonne: deal.rate_per_tonne,
+          voyage_id: newVoyage.insertId,
+          unit_weight: deal.unit_weight,
+          total_price,
+        });
+      });
+    } else {
+      this.logger.log('Creating a deal with existing voyage');
+      await this.db.primary.insert(schema.deal).values({
+        company_id: deal.company_id,
+        goods_description: deal.goods_description,
+        quantity: deal.quantity,
+        rate_per_tonne: deal.rate_per_tonne,
+        total_price,
+        unit_weight: deal.unit_weight,
+        voyage_id: deal.voyage_id,
+      });
+    }
   }
 
   async updateDeal(deal_id: number, deal: Partial<typeof schema.deal.$inferInsert>) {

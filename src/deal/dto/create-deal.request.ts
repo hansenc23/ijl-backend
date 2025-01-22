@@ -1,12 +1,15 @@
-import { IsNotEmpty, IsString, IsInt, IsDecimal, IsBoolean } from 'class-validator';
+import { IsNotEmpty, IsString, IsInt, IsDecimal, IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import { CreateVoyageRequest } from '../../voyage/dto/create-voyage.request';
+import { Type } from 'class-transformer';
 
-export class CreateDealRequest {
+class DealDto {
   @IsInt()
   @IsNotEmpty()
   company_id: number;
 
   @IsInt()
   @IsNotEmpty()
+  @IsOptional()
   voyage_id: number;
 
   @IsInt()
@@ -28,4 +31,14 @@ export class CreateDealRequest {
   @IsBoolean()
   @IsNotEmpty()
   is_paid: boolean;
+}
+export class CreateDealRequest {
+  @ValidateNested()
+  @Type(() => CreateVoyageRequest)
+  @IsOptional()
+  voyage: CreateVoyageRequest;
+
+  @ValidateNested()
+  @Type(() => DealDto)
+  deal: DealDto;
 }
