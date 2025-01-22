@@ -9,7 +9,7 @@ export const voyage = mysqlTable(
     voyage_number: text('voyage_number').notNull(),
     from_location: text('from_location').notNull(),
     to_location: text('to_location').notNull(),
-    ship_id: int('ship_id'),
+    ship_id: int('ship_id').notNull(),
   },
   (table) => {
     return {
@@ -18,7 +18,7 @@ export const voyage = mysqlTable(
         foreignColumns: [ships.id],
         name: 'Voyage_ibfk_1',
       })
-        .onDelete('set null')
+        .onDelete('restrict')
         .onUpdate('cascade'),
     };
   },

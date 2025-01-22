@@ -17,8 +17,9 @@ export class DealController {
   }
 
   @Post()
-  async createShip(@Body() request: CreateDealRequest) {
-    return this.dealService.createDeal(request);
+  async createDeal(@Body() request: CreateDealRequest) {
+    const { voyage, deal } = request;
+    return this.dealService.createDeal(deal, voyage);
   }
 
   @Patch(':id')

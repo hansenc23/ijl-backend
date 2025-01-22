@@ -7,9 +7,9 @@ export const deal = mysqlTable(
   'Deal',
   {
     id: int('id').autoincrement().primaryKey(),
-    voyage_id: int('voyage_id'),
-    company_id: int('company_id'),
-    total_price: float('total_price'),
+    voyage_id: int('voyage_id').notNull(),
+    company_id: int('company_id').notNull(),
+    total_price: float('total_price').notNull(),
     is_paid: boolean('is_paid').notNull().default(false),
     quantity: int('quantity').notNull(),
     goods_description: text('goods_description').notNull(),
@@ -23,14 +23,14 @@ export const deal = mysqlTable(
         foreignColumns: [voyage.id],
         name: 'Deal_ibfk_1',
       })
-        .onDelete('set null')
+        .onDelete('restrict')
         .onUpdate('cascade'),
       company_id_reference: foreignKey({
         columns: [table.company_id],
         foreignColumns: [company.id],
         name: 'Deal_ibfk_2',
       })
-        .onDelete('set null')
+        .onDelete('restrict')
         .onUpdate('cascade'),
     };
   },
