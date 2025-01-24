@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { voyage as voyageSchema } from '../drizzle/schema';
-import { deal as dealSchema } from './schema';
+import { deal as dealSchema } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { CreateDealRequest } from './dto/create-deal.request';
 import { Logger } from '@nestjs/common';
