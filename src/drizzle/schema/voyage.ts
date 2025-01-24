@@ -1,7 +1,7 @@
 import { relations } from 'drizzle-orm';
 import { text, mysqlTable, int, foreignKey } from 'drizzle-orm/mysql-core';
 import { ship } from './ship';
-
+import { deal } from './deal';
 export const voyage = mysqlTable(
   'Voyage',
   {
@@ -24,9 +24,10 @@ export const voyage = mysqlTable(
   },
 );
 
-export const voyageRelations = relations(voyage, ({ one }) => ({
+export const voyageRelations = relations(voyage, ({ one, many }) => ({
   ship: one(ship, {
     fields: [voyage.ship_id],
     references: [ship.id],
   }),
+  deals: many(deal),
 }));

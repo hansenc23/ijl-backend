@@ -14,6 +14,10 @@ export class VoyageService {
   async getVoyage(id: number) {
     const voyage = await this.db.primary.query.voyage.findFirst({
       where: eq(voyageSchema.id, id),
+      with: {
+        ship: true,
+        deals: true,
+      },
     });
 
     if (!voyage) {

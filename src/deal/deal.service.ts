@@ -5,11 +5,17 @@ import { deal as dealSchema } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 import { CreateDealRequest } from './dto/create-deal.request';
 import { Logger } from '@nestjs/common';
+import { VoyageService } from '../voyage/voyage.service';
+import { MAX_DEALS_PER_VOYAGE } from '../common/constants';
+import { NotAcceptableException } from '@nestjs/common';
 @Injectable()
 export class DealService {
   private readonly logger = new Logger(DealService.name);
 
-  constructor(private db: DatabaseService) {}
+  constructor(
+    private db: DatabaseService,
+    private voyageService: VoyageService,
+  ) {}
 
   async getDeals() {
     return this.db.primary.query.deal.findMany();
@@ -54,16 +60,21 @@ export class DealService {
         });
       });
     } else {
-      this.logger.log('Creating a deal with existing voyage');
-      await this.db.primary.insert(dealSchema).values({
-        company_id: deal.company_id,
-        goods_description: deal.goods_description,
-        quantity: deal.quantity,
-        rate_per_tonne: deal.rate_per_tonne,
-        total_price,
-        unit_weight: deal.unit_weight,
-        voyage_id: deal.voyage_id,
-      });
+      const voyageDetails = await this.voyageService.getVoyage(deal.voyage_id);
+      if (voyageDetails.deals.length >= MAX_DEALS_PER_VOYAGE) {
+        throw new NotAcceptableException('Maximum of 2 companies already using this voyage');
+      } else {
+        this.logger.log('Creating a deal with existing voyage');
+        await this.db.primary.insert(dealSchema).values({
+          company_id: deal.company_id,
+          goods_description: deal.goods_description,
+          quantity: deal.quantity,
+          rate_per_tonne: deal.rate_per_tonne,
+          total_price,
+          unit_weight: deal.unit_weight,
+          voyage_id: deal.voyage_id,
+        });
+      }
     }
   }
 
