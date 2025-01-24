@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 import { text, mysqlTable, int, foreignKey } from 'drizzle-orm/mysql-core';
-import { ships } from '../ships/schema';
+import { ship } from './ship';
 
 export const voyage = mysqlTable(
   'Voyage',
@@ -15,7 +15,7 @@ export const voyage = mysqlTable(
     return {
       ship_id_reference: foreignKey({
         columns: [table.ship_id],
-        foreignColumns: [ships.id],
+        foreignColumns: [ship.id],
         name: 'Voyage_ibfk_1',
       })
         .onDelete('restrict')
@@ -25,8 +25,8 @@ export const voyage = mysqlTable(
 );
 
 export const voyageRelations = relations(voyage, ({ one }) => ({
-  ship: one(ships, {
+  ship: one(ship, {
     fields: [voyage.ship_id],
-    references: [ships.id],
+    references: [ship.id],
   }),
 }));

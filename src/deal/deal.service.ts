@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
-import * as schema from './schema';
-import * as voyageSchema from '../voyage/schema';
+import { voyage as voyageSchema } from '../drizzle/schema';
+import { deal as dealSchema } from './schema';
 import { eq } from 'drizzle-orm';
 import { CreateDealRequest } from './dto/create-deal.request';
 import { Logger } from '@nestjs/common';
@@ -17,7 +17,7 @@ export class DealService {
 
   async getDeal(deal_id: number) {
     const deal = await this.db.primary.query.deal.findFirst({
-      where: eq(schema.deal.id, deal_id),
+      where: eq(dealSchema.id, deal_id),
       with: {
         company: true,
         voyage: true,
@@ -36,14 +36,14 @@ export class DealService {
     if (voyage && deal) {
       this.logger.log('Creating a deal with a new voyage');
       await this.db.primary.transaction(async (tx) => {
-        const [newVoyage] = await tx.insert(voyageSchema.voyage).values({
+        const [newVoyage] = await tx.insert(voyageSchema).values({
           from_location: voyage.from_location,
           to_location: voyage.to_location,
           voyage_number: voyage.voyage_number,
           ship_id: voyage.ship_id,
         });
 
-        await tx.insert(schema.deal).values({
+        await tx.insert(dealSchema).values({
           company_id: deal.company_id,
           goods_description: deal.goods_description,
           quantity: deal.quantity,
@@ -55,7 +55,7 @@ export class DealService {
       });
     } else {
       this.logger.log('Creating a deal with existing voyage');
-      await this.db.primary.insert(schema.deal).values({
+      await this.db.primary.insert(dealSchema).values({
         company_id: deal.company_id,
         goods_description: deal.goods_description,
         quantity: deal.quantity,
@@ -67,9 +67,9 @@ export class DealService {
     }
   }
 
-  async updateDeal(deal_id: number, deal: Partial<typeof schema.deal.$inferInsert>) {
+  async updateDeal(deal_id: number, deal: Partial<typeof dealSchema.$inferInsert>) {
     const dealRecord = await this.db.primary.query.deal.findFirst({
-      where: eq(schema.deal.id, deal_id),
+      where: eq(dealSchema.id, deal_id),
     });
 
     if (!dealRecord) {
@@ -90,6 +90,6 @@ export class DealService {
       total_price,
     };
 
-    await this.db.primary.update(schema.deal).set(dealRecordUpdate).where(eq(schema.deal.id, dealRecord.id));
+    await this.db.primary.update(dealSchema).set(dealRecordUpdate).where(eq(dealSchema.id, dealRecord.id));
   }
 }

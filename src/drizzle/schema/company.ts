@@ -1,6 +1,6 @@
 import { text, mysqlTable, int } from 'drizzle-orm/mysql-core';
 import { relations } from 'drizzle-orm';
-import { deal } from '../deal/schema';
+import { deal } from './deal';
 
 export const company = mysqlTable('Company', {
   id: int('id').autoincrement().primaryKey(),

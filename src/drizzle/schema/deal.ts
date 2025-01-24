@@ -1,6 +1,6 @@
 import { text, mysqlTable, int, float, boolean, foreignKey } from 'drizzle-orm/mysql-core';
-import { voyage } from '../drizzle/schema';
-import { company } from '../drizzle/schema';
+import { voyage } from './voyage';
+import { company } from './company';
 import { relations } from 'drizzle-orm';
 
 export const deal = mysqlTable(

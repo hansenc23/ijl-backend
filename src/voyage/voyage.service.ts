@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
-import * as schema from './schema';
+import { voyage as voyageSchema } from '../drizzle/schema';
 import { eq } from 'drizzle-orm';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class VoyageService {
 
   async getVoyage(id: number) {
     const voyage = await this.db.primary.query.voyage.findFirst({
-      where: eq(schema.voyage.id, id),
+      where: eq(voyageSchema.id, id),
     });
 
     if (!voyage) {
@@ -23,7 +23,7 @@ export class VoyageService {
     return voyage;
   }
 
-  async createVoyage(voyage: typeof schema.voyage.$inferInsert) {
-    await this.db.primary.insert(schema.voyage).values(voyage);
+  async createVoyage(voyage: typeof voyageSchema.$inferInsert) {
+    await this.db.primary.insert(voyageSchema).values(voyage);
   }
 }
