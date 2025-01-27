@@ -1,6 +1,7 @@
 import { text, mysqlTable, int, float, boolean, foreignKey } from 'drizzle-orm/mysql-core';
 import { voyage } from './voyage';
 import { company } from './company';
+import { invoice } from './invoice';
 import { relations } from 'drizzle-orm';
 
 export const deal = mysqlTable(
@@ -36,7 +37,7 @@ export const deal = mysqlTable(
   },
 );
 
-export const dealRelations = relations(deal, ({ one }) => ({
+export const dealRelations = relations(deal, ({ one, many }) => ({
   voyage: one(voyage, {
     fields: [deal.voyage_id],
     references: [voyage.id],
@@ -45,4 +46,5 @@ export const dealRelations = relations(deal, ({ one }) => ({
     fields: [deal.company_id],
     references: [company.id],
   }),
+  invoices: many(invoice),
 }));

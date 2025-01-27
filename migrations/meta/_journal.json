@@ -57,6 +57,13 @@
       "when": 1737719491047,
       "tag": "20250124115131_fresh_nicolaos",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1737972959079,
+      "tag": "20250127101559_add-invoice-table",
+      "breakpoints": true
     }
   ]
 }

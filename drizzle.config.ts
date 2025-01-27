@@ -5,11 +5,11 @@ export default defineConfig({
   out: './migrations',
   dialect: 'mysql',
   dbCredentials: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USERNAME,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: parseInt(process.env.DB_PORT),
+    host: process.env.DB_HOST ?? 'localhost',
+    user: process.env.DB_USER ?? 'root',
+    password: process.env.DB_PASSWORD ?? 'root',
+    database: process.env.DB_NAME ?? 'ijl',
+    port: Number(process.env.DB_PORT) || 3306,
   },
   // Print all statements
   verbose: true,
