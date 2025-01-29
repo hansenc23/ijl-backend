@@ -1,19 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ShipService } from './ship.service';
+import { InvoiceService } from './invoice.service';
 import { DatabaseService } from '../database/database.service';
 
-describe('ShipsService', () => {
-  let service: ShipService;
+describe('InvoiceService', () => {
+  let service: InvoiceService;
 
   beforeEach(async () => {
     const mockDatabaseService = {
       query: jest.fn(),
     };
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ShipService, { provide: DatabaseService, useValue: mockDatabaseService }],
+      providers: [InvoiceService, { provide: DatabaseService, useValue: mockDatabaseService }],
     }).compile();
 
-    service = module.get<ShipService>(ShipService);
+    service = module.get<InvoiceService>(InvoiceService);
   });
 
   it('should be defined', () => {

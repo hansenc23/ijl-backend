@@ -1,7 +1,7 @@
 import { Module, OnModuleInit, Logger, HttpException, HttpStatus, OnApplicationShutdown } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import { DRIZZLE_ORM_INSTANCE, MYSQL_CLIENT, InjectMysqlPool } from './database.injector';
-import db, { poolConnection } from 'src/drizzle/db';
+import db, { poolConnection } from '../drizzle/db';
 @Module({
   providers: [
     DatabaseService,

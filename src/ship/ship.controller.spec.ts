@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ShipsController } from './ship.controller';
-import { ShipsService } from './ship.service';
+import { ShipController } from './ship.controller';
+import { ShipService } from './ship.service';
 
 describe('ShipsController', () => {
-  let controller: ShipsController;
+  let controller: ShipController;
 
   beforeEach(async () => {
     const mockShipsService = {
       getShips: jest.fn(),
     };
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ShipsController],
-      providers: [{ provide: ShipsService, useValue: mockShipsService }],
+      controllers: [ShipController],
+      providers: [{ provide: ShipService, useValue: mockShipsService }],
     }).compile();
 
-    controller = module.get<ShipsController>(ShipsController);
+    controller = module.get<ShipController>(ShipController);
   });
 
   it('should be defined', () => {

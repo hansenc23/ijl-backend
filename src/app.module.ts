@@ -7,6 +7,7 @@ import { ShipModule } from './ship/ship.module';
 import { CompanyModule } from './company/company.module';
 import { VoyageModule } from './voyage/voyage.module';
 import { DealModule } from './deal/deal.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DealModule } from './deal/deal.module';
     CompanyModule,
     VoyageModule,
     DealModule,
+    InvoiceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

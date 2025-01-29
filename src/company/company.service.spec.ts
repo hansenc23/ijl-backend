@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CompanyService } from './company.service';
 import { DatabaseService } from '../database/database.service';
 import { NotFoundException } from '@nestjs/common';
-import * as schema from './schema';
+import { company } from '../drizzle/schema';
 const mockCompany = { id: 1, name: 'Air Mas Logistik', initials: 'AML' };
 
 const mockDatabaseService = {
@@ -79,7 +79,7 @@ describe('CompanyService', () => {
   describe('/companies - createCompany', () => {
     it('should create a company', async () => {
       await service.createCompany(mockCompany);
-      expect(mockDatabaseService.primary.insert).toHaveBeenCalledWith(schema.company);
+      expect(mockDatabaseService.primary.insert).toHaveBeenCalledWith(company);
     });
   });
 });
