@@ -11,6 +11,17 @@ export const seedDeals = async () => {
       voyage_id: 1,
       unit_weight: 40,
       total_price: 400000000,
+      created_at: new Date(),
+    },
+    {
+      company_id: 2,
+      goods_description: 'Kayu',
+      quantity: 10000,
+      rate_per_tonne: 200000,
+      voyage_id: 1,
+      unit_weight: 40,
+      total_price: 80000000,
+      created_at: new Date(),
     },
   ]);
   console.log('Deals seeded');

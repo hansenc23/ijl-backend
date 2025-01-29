@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString, IsEnum, IsNumber, IsDateString } from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsString, IsEnum, IsNumber, IsDate } from 'class-validator';
 
 enum InvoiceType {
   DOWN_PAYMENT = 'DOWN_PAYMENT',
@@ -26,7 +26,7 @@ export class CreateInvoiceRequest {
   @IsNotEmpty()
   type: InvoiceType;
 
-  @IsDateString()
+  @IsDate()
   @IsNotEmpty()
-  created_at: string;
+  created_at: Date;
 }

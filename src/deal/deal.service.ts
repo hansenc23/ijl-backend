@@ -57,6 +57,7 @@ export class DealService {
           voyage_id: newVoyage.insertId,
           unit_weight: deal.unit_weight,
           total_price,
+          created_at: deal.created_at,
         });
       });
     } else {
@@ -73,6 +74,7 @@ export class DealService {
           total_price,
           unit_weight: deal.unit_weight,
           voyage_id: deal.voyage_id,
+          created_at: deal.created_at,
         });
       }
     }

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsInt, IsDecimal, IsBoolean, IsOptional, ValidateNested } from 'class-validator';
+import { IsNotEmpty, IsString, IsInt, IsDecimal, IsBoolean, IsOptional, ValidateNested, IsDate } from 'class-validator';
 import { CreateVoyageRequest } from '../../voyage/dto/create-voyage.request';
 import { Type } from 'class-transformer';
 
@@ -31,6 +31,10 @@ class DealDto {
   @IsBoolean()
   @IsNotEmpty()
   is_paid: boolean;
+
+  @IsDate()
+  @IsNotEmpty()
+  created_at: Date;
 }
 export class CreateDealRequest {
   @ValidateNested()

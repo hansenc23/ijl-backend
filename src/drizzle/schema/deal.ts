@@ -1,4 +1,4 @@
-import { text, mysqlTable, int, float, boolean, foreignKey } from 'drizzle-orm/mysql-core';
+import { text, mysqlTable, int, float, boolean, foreignKey, datetime } from 'drizzle-orm/mysql-core';
 import { voyage } from './voyage';
 import { company } from './company';
 import { invoice } from './invoice';
@@ -16,6 +16,7 @@ export const deal = mysqlTable(
     goods_description: text('goods_description').notNull(),
     rate_per_tonne: float('rate_per_tonne').notNull(),
     unit_weight: float('unit_weight').notNull(),
+    created_at: datetime('created_at', { mode: 'date' }).notNull(),
   },
   (table) => {
     return {
