@@ -46,8 +46,8 @@ export class InvoiceService {
     const { company_id, ship_id, voyage_number, voyage_id, new_voyage, date } = request;
     const companyInitials = (await this.companyService.getCompany(company_id)).initials;
     const shipInitials = (await this.shipService.getShip(ship_id)).initials;
-    const month = DateTime.fromISO(date.toISOString(), { locale: 'id' }).monthShort?.toUpperCase();
-    const year = DateTime.fromISO(date.toISOString(), { locale: 'id' }).year;
+    const month = DateTime.fromISO(date, { locale: 'id' }).monthShort?.toUpperCase();
+    const year = DateTime.fromISO(date, { locale: 'id' }).year;
 
     if (new_voyage) {
       // Validate voyage_number

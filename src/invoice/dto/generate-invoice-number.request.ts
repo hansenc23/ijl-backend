@@ -1,4 +1,4 @@
-import { IsBoolean, IsInt, IsNotEmpty, IsString, IsEnum, IsNumber, IsDate } from 'class-validator';
+import { IsBoolean, IsInt, IsNotEmpty, IsString, IsEnum, IsNumber, IsDateString } from 'class-validator';
 
 export class GenerateInvoiceNumberRequest {
   @IsInt()
@@ -19,7 +19,7 @@ export class GenerateInvoiceNumberRequest {
   @IsNotEmpty()
   new_voyage: boolean;
 
-  @IsDate()
+  @IsDateString()
   @IsNotEmpty()
-  date: Date;
+  date: string;
 }
